@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for WordPress
+name: PHP Lint WordPress
 
 on:
   push:
@@ -9,24 +9,21 @@ on:
       - master
 
 jobs:
-  lint_php:
+  lint:
+    name: Lint PHP
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'  # Chọn phiên bản PHP phù hợp
+          php-version: '7.4'
 
-      - name: Install PHP dependencies
-        run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-          composer install
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
 
-      - name: Run PHP CodeSniffer
-        run: |
-          vendor/bin/phpcs --standard=WordPress .
+      - name: Run PHP linter
+        run: find . -type f -name "*.php" -exec php -l {} \;

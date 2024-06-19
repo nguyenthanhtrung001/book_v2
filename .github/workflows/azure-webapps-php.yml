@@ -1,39 +1,31 @@
-name: PHP Lint WordPress
+name: Deploy WordPress
 
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - main  # Thay đổi branch nếu cần
 
 jobs:
-  lint:
-    name: Lint PHP
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
 
-      - name: Install WordPress
-        run: |
-          wget https://wordpress.org/latest.tar.gz
-          tar -xzf latest.tar.gz
-          mv wordpress/* .
-          rm -rf wordpress latest.tar.gz
+   
 
-      - name: Install PHPUnit
-        run: |
-          wget -O phpunit https://phar.phpunit.de/phpunit-9.phar
-          chmod +x phpunit
-          sudo mv phpunit /usr/local/bin/phpunit
+    - name: Install WordPress CLI
+      run: |
+        curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        chmod +x wp-cli.phar
+        sudo mv wp-cli.phar /usr/local/bin/wp
 
-      - name: Run PHP linting
-        run: find . -type f -name "*.php" -exec php -l {} \;
+    - name: Deploy to staging/production
+      run: |
+        wp core install --url=yourdomain.com --title="Your Site Title" --admin_user=admin --admin_password=admin --admin_email=admin@example.com

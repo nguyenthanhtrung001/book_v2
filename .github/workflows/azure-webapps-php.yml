@@ -22,8 +22,18 @@ jobs:
         with:
           php-version: '7.4'
 
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist
+      - name: Install WordPress
+        run: |
+          wget https://wordpress.org/latest.tar.gz
+          tar -xzf latest.tar.gz
+          mv wordpress/* .
+          rm -rf wordpress latest.tar.gz
 
-      - name: Run PHP linter
+      - name: Install PHPUnit
+        run: |
+          wget -O phpunit https://phar.phpunit.de/phpunit-9.phar
+          chmod +x phpunit
+          sudo mv phpunit /usr/local/bin/phpunit
+
+      - name: Run PHP linting
         run: find . -type f -name "*.php" -exec php -l {} \;

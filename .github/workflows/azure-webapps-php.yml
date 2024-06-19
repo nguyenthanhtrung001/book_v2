@@ -1,29 +1,22 @@
-name: Deploy WordPress
+name: PHP Project CI
 
 on:
   push:
-    branches:
-      - master  # Thay đổi branch nếu cần
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
 
 jobs:
-  deploy:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.0'
-
-    - name: Install WordPress CLI
-      run: |
-        curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-        chmod +x wp-cli.phar
-        sudo mv wp-cli.phar /usr/local/bin/wp
-
-    - name: Deploy to staging/production
-      run: |
-        wp core install --url=yourdomain.com --title="Your Site Title" --admin_user=admin --admin_password=admin --admin_email=admin@example.com
+    # Replace with steps specific to your project
+    - name: Run PHP tests
+      run: vendor/bin/phpunit

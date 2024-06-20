@@ -20,12 +20,25 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4' # Thay đổi phiên bản PHP nếu cần
+        php-version: '7.4'
         extensions: mbstring, intl, json, pdo, pdo_mysql
         coverage: xdebug
 
+    - name: Install Composer
+      run: |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        php -r "unlink('composer-setup.php');"
+
     - name: Install dependencies
-      run: echo "Install any dependencies here"
+      run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Run tests
-      run: echo "Run your tests here"
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+    - name: Upload coverage
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: coverage.xml

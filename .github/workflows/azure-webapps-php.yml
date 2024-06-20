@@ -1,0 +1,25 @@
+name: PHP CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4' # Thay đổi phiên bản PHP nếu cần
+        extensions: mbstring, intl, json, pdo, pdo_mysql
+        coverage: xdebug
+
+    - name: Install dependencies
+      run: echo "Install any dependencies here"
+
+    - name: Run tests
+      run: echo "Run your tests here"

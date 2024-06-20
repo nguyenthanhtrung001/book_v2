@@ -3,7 +3,7 @@
         'name' => 'hackdest/wordpress-cicd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '00dc6752fc1255e58ad455a1faad8d1c3f91340b',
+        'reference' => 'a05a393a9415f6a419962a426da668c0bb90dde6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'hackdest/wordpress-cicd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '00dc6752fc1255e58ad455a1faad8d1c3f91340b',
+            'reference' => 'a05a393a9415f6a419962a426da668c0bb90dde6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -63,6 +63,15 @@
             'install_path' => __DIR__ . '/../phar-io/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.1',
+            'version' => '6.9.1.0',
+            'reference' => '039de174cd9c17a8389754d3b877a2ed22743e18',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '9.2.31',

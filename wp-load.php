@@ -58,7 +58,7 @@ if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
 
 	// A config file doesn't exist.
 
-	define( 'WPINC', 
+	define( 'WPINC', 'wp-includes' );
 	require_once ABSPATH . WPINC . '/version.php';
 	require_once ABSPATH . WPINC . '/compat.php';
 	require_once ABSPATH . WPINC . '/load.php';

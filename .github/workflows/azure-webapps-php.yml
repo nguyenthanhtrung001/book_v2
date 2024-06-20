@@ -1,68 +1,39 @@
-name: WordPress CI/CD
+name: PHP Composer
 
 on:
   push:
-    branches:
-      - master
+    branches: [ "master" ]
   pull_request:
-    branches:
-      - master
+    branches: [ "master" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:5.7
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: wordpress_test
-        ports:
-          - 3306:3306
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
       with:
-        php-version: '7.4'
-        extensions: mbstring, mysqli, intl, xml, curl, json, ctype, token_get_all, fileinfo
-        ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
-        coverage: none
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
 
-    - name: Install Composer
-      run: sudo apt-get install -y composer
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
 
-    - name: Install Composer dependencies
-      run: |
-        if [ -f composer.json ]; then
-          composer install --no-progress --prefer-dist
-        else
-          echo "No composer.json found, skipping Composer install"
-        fi
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Copy wp-config.php
-      run: cp wp-config-sample.php wp-config.php
-
-    - name: Update wp-config.php
-      run: |
-        sed -i "s/database_name_here/wordpress_test/" wp-config.php
-        sed -i "s/username_here/root/" wp-config.php
-        sed -i "s/password_here/root/" wp-config.php
-        echo "define('WP_DEBUG', true);" >> wp-config.php
-        echo "define('WP_DEBUG_LOG', true);" >> wp-config.php
-
-    # - name: Deploy to Remote Server
-    #   env:
-    #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-    #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
-    #   run: |
-    #     echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    #     ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
-    #     rsync -avz --exclude '.git/' . $REMOTE_USER@$REMOTE_HOST:/path/to/your/project
+    # - name: Run test suite
+    #   run: composer run-script test

@@ -20,5 +20,8 @@
             "echo \"define('WP_DEBUG_LOG', true);\" >> wp-config.php"
         ],
          "test": "vendor/bin/phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }

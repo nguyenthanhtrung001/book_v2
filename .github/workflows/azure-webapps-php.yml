@@ -18,7 +18,7 @@ jobs:
     - name: Get list of changed files
       id: changed-files
       run: |
-        git fetch origin main:refs/remotes/origin/master
+        git fetch origin master:refs/remotes/origin/master
         git diff --name-only origin/main ${{ github.sha }} > all_changed_files.txt
         echo "All changed files:"
         cat all_changed_files.txt

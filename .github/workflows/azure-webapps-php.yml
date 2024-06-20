@@ -1,44 +1,32 @@
-name: PHP CI
+name: CI
 
 on:
   push:
     branches:
-      - master
+      - master  # Thay 'main' bằng tên nhánh chính của bạn
   pull_request:
     branches:
-      - master
+      - master  # Thay 'main' bằng tên nhánh chính của bạn
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '7.4'
-        extensions: mbstring, intl, json, pdo, pdo_mysql
-        coverage: xdebug
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'  # Thay '7.4' bằng phiên bản PHP bạn đang sử dụng
 
-    - name: Install Composer
-      run: |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-        php -r "unlink('composer-setup.php');"
+     
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install PHPUnit
+        run: composer require --dev phpunit/phpunit ^9
 
-    - name: Run tests
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Run PHP unit tests
+        run: vendor/bin/phpunit
 
-    - name: Upload coverage
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage
-        path: coverage.xml
+      # Add more steps as needed, such as linting, integration tests, deployment, etc.

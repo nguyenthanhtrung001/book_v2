@@ -21,13 +21,7 @@ jobs:
         with:
           php-version: '7.4'  # Thay '7.4' bằng phiên bản PHP bạn đang sử dụng
 
-      - name: Set up WordPress
-        run: |
-          # Download and set up WordPress (replace with your WordPress setup script)
-          wget -q -O wordpress.zip https://wordpress.org/latest.zip
-          unzip -q wordpress.zip
-          mv wordpress/* .
-          rm -rf wordpress wordpress.zip
+     
 
       - name: Install PHPUnit
         run: composer require --dev phpunit/phpunit ^9

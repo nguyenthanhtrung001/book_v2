@@ -1,23 +1,6 @@
 {
-    "name": "hackdest/wordpress-cicd",
-    "description": "A WordPress project with CI/CD",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.4"
-    },
-    "autoload": {
-        "psr-4": {
-            "YourNamespace\\": "src/"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "cp wp-config-sample.php wp-config.php",
-            "sed -i 's/database_name_here/wordpress_test/' wp-config.php",
-            "sed -i 's/username_here/root/' wp-config.php",
-            "sed -i 's/password_here/root/' wp-config.php",
-            "echo \"define('WP_DEBUG', true);\" >> wp-config.php",
-            "echo \"define('WP_DEBUG_LOG', true);\" >> wp-config.php"
-        ]
+    "require-dev": {
+      "squizlabs/php_codesniffer": "^3.10"
     }
-}
+  }
+  

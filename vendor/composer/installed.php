@@ -3,7 +3,7 @@
         'name' => 'hackdest/wordpress-cicd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '330f77a3ece61cb1b687b5530552e7d49372dad5',
+        'reference' => 'b3b8edf91c3ae8905f3b6df4fa3b74ef389ad56c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'hackdest/wordpress-cicd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '330f77a3ece61cb1b687b5530552e7d49372dad5',
+            'reference' => 'b3b8edf91c3ae8905f3b6df4fa3b74ef389ad56c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

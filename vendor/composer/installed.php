@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'name' => 'hackdest/wordpress-cicd',
+        'name' => 'abc/wordpress-cicd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a05a393a9415f6a419962a426da668c0bb90dde6',
+        'reference' => '3acb47b746f6027f9396be0c23060e111b510aa4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'abc/wordpress-cicd' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '3acb47b746f6027f9396be0c23060e111b510aa4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'doctrine/instantiator' => array(
             'pretty_version' => '1.5.0',
             'version' => '1.5.0.0',
@@ -18,15 +27,6 @@
             'install_path' => __DIR__ . '/../doctrine/instantiator',
             'aliases' => array(),
             'dev_requirement' => true,
-        ),
-        'hackdest/wordpress-cicd' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a05a393a9415f6a419962a426da668c0bb90dde6',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.12.0',

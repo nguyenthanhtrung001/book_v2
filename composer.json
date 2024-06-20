@@ -3,7 +3,7 @@
     "description": "A WordPress project with CI/CD",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4
     },
     "autoload": {
         "psr-4": {

@@ -1,5 +1,5 @@
 {
-    "name": "hackdest/wordpress-cicd",
+    "name": "abc/wordpress-cicd",
     "description": "A WordPress project with CI/CD",
     "license": "proprietary",
     "require": {

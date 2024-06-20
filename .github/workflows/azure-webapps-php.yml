@@ -3,42 +3,31 @@ name: PHP CI
 on:
   push:
     branches:
-      - master
+      - master  # Thay thế bằng tên nhánh mặc định của bạn
   pull_request:
     branches:
-      - master
+      - master  # Thay thế bằng tên nhánh mặc định của bạn
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '7.4'
-        extensions: mbstring, intl, json, pdo, pdo_mysql
-        coverage: xdebug
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'  # Thay thế bằng phiên bản PHP của bạn
 
-    - name: Install Composer
-      run: |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-        php -r "unlink('composer-setup.php');"
+      - name: Install Composer dependencies
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+          rm composer-setup.php
+          composer install --no-interaction --prefer-dist --optimize-autoloader
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit --coverage-text --colors=never
 
-    - name: Run tests
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
-
-    - name: Upload coverage
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage
-        path: coverage.xml

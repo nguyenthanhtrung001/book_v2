@@ -1,33 +1,37 @@
-name: PHP CI
+name: CI
 
 on:
   push:
     branches:
-      - master  # Thay thế bằng tên nhánh mặc định của bạn
+      - master  # Thay 'main' bằng tên nhánh chính của bạn
   pull_request:
     branches:
-      - master  # Thay thế bằng tên nhánh mặc định của bạn
+      - master  # Thay 'main' bằng tên nhánh chính của bạn
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'  # Thay thế bằng phiên bản PHP của bạn
+          php-version: '7.4'  # Thay '7.4' bằng phiên bản PHP bạn đang sử dụng
 
       - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Set up WordPress
         run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-          rm composer-setup.php
-          composer install --no-interaction --prefer-dist --optimize-autoloader
+          bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-      - name: Run PHPUnit tests
-        run: vendor/bin/phpunit --coverage-text --colors=never
+      - name: Run PHP unit tests
+        run: vendor/bin/phpunit
 
+      - name: Run PHP linting
+        run: find . -name '*.php' ! -path './vendor/*' -print0 | xargs -0 -n1 -P8 php -l
+
+      # Add more steps as needed, such as integration tests, static analysis, etc.

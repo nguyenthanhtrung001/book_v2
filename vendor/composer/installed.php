@@ -3,7 +3,7 @@
         'name' => 'abc/wordpress-cicd',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7987fc87b930cbb03872208bdc4e7360d8813c47',
+        'reference' => '681ca9c6c18dec8eaf8513a7b8402db179863dc3',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'abc/wordpress-cicd' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7987fc87b930cbb03872208bdc4e7360d8813c47',
+            'reference' => '681ca9c6c18dec8eaf8513a7b8402db179863dc3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
